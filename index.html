@@ -290,6 +290,14 @@
     opacity:0; transition: opacity 0.35s;
   }
   .article-image.loaded{ opacity:1; }
+
+  /* ---------- CRT-обработанные арты (уже зелёные, серый фильтр не нужен) ---------- */
+  .article .img-frame.art-frame{ height:auto; aspect-ratio:16/9; width:min(100%, 620px); border-color:var(--green-dim); }
+  .art-image{
+    display:block; width:100%; height:100%; object-fit:cover; background:#000;
+    opacity:0; transition: opacity 0.35s;
+  }
+  .art-image.loaded{ opacity:1; }
   .faction-divider{
     grid-column:1 / -1; color:var(--bg); background:var(--amber); border:none;
     padding:8px 14px; margin-top:6px; letter-spacing:2px; font-size:0.78rem; font-weight:bold;
@@ -950,6 +958,7 @@ const DATA = {
       title: "Smiths Heavy Industries",
       preview: "Оружейный гигант, выкованный на обломках заводов Великой Бойни.",
       image: "assets/smiths.png",
+      art: "assets/smiths-art.jpg",
       body: [
         "Оружейный гигант, выкованный мистером Смитом на обломках разрушенных заводов времён Великой Бойни. Они куют тяжёлую броню, собирают артиллерию и штампуют боеприпасы для всего Содома. Их продукция уродлива, брутальна и безотказна."
       ],
@@ -1025,6 +1034,7 @@ const DATA = {
       title: "Ironvale Construction",
       preview: "Строительно-горнодобывающий гигант, который расширяет Содом вниз.",
       image: "assets/ironvale.png",
+      art: "assets/ironvale-art.jpg",
       body: [
         "Строительно-горнодобывающая корпорация, занятая бурением и расширением тоннельной сети под Содомом и прокладыванием новых уровней коммуникаций, укрытий и грузовых артерий в толще породы, на которой стоит город.",
         "Работа идёт постоянно, потому что город растёт вниз быстрее, чем успевает расти вверх. Смертность среди проходчиков считается нормой ведения бизнеса, а не чрезвычайным происшествием: обвалы, отравления воздуха и вещи, которые иногда выходят из свежепробитого туннеля навстречу бригаде, списываются в один и тот же отчёт под графой «производственные потери»."
@@ -1076,6 +1086,7 @@ const DATA = {
       title: "Civil War",
       preview: "Ветераны Великой Бойни.",
       image: "assets/civilwar.png",
+      art: "assets/civilwar-art.jpg",
       body: [
         "Синдикат из ветеранов Великой Бойни, которые давно не воюют за идею, потому что идей у них не осталось ни одной, зато осталась потребность снова почувствовать себя нужными и получить дозу адреналина, которую мирная жизнь дать не в состоянии.",
         "Civil War берётся за любую работу, где можно подраться: зачистки, силовое сопровождение, выбивание долгов, охрана караванов через опасные секторы, и работают одинаково охотно что на корпорацию, что на синдикат с нижнего уровня, лишь бы платили и дали пострелять.",
@@ -1437,6 +1448,9 @@ function renderArticle(){
       html += `<div class="img-frame"><div class="img-skeleton">ЗАГРУЗКА ИЗОБРАЖЕНИЯ...</div><img class="article-image" src="${e.image}" alt="${e.title}" onload="this.classList.add('loaded');this.previousElementSibling.classList.add('hide')"></div>`;
     } else if(expectsImage(e)){
       html += `<div class="img-frame"><div class="img-skeleton img-skeleton-static">ЗАГРУЗКА ИЗОБРАЖЕНИЯ...</div></div>`;
+    }
+    if(e.art){
+      html += `<div class="img-frame art-frame"><div class="img-skeleton">ЗАГРУЗКА ИЗОБРАЖЕНИЯ...</div><img class="art-image" src="${e.art}" alt="${e.title}" onload="this.classList.add('loaded');this.previousElementSibling.classList.add('hide')"></div>`;
     }
     if(e.motto) html += `<div class="motto">${e.motto}</div>`;
     html += `<div class="body-text">${e.body.map(()=>`<p></p>`).join('')}</div>`;
